@@ -8,8 +8,7 @@ class StopWatch:
         if start: self.start()
 
     def start(self, reset=False):
-        if reset:
-            self.reset()
+        if reset: self.reset()
         if not self._is_working:
             self._start = time.time()
             self._is_working = True
