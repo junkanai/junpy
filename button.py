@@ -21,6 +21,12 @@ class Button:
         self._update()
 
     # about general
+    def __contains__(self, pos):
+        if not self._is_active: return False
+        if not (self._bx < pos[0] <= self._bx + self._bw): return False
+        if not (self._by < pos[1] <= self._by + self._bh): return False
+        return True
+
     def set_position(self, bx, by):
         self._bx, self._by = bx, by
         self._update()
@@ -91,6 +97,9 @@ class Button:
 
     # about general
     def _update(self):
+        # position ajustment
+
+        # prepare for drawing
         self._pyBox = pygame.Rect(self._bx, self._by, self._bw, self._bh)
         if self._hasText:
             pyfont = pygame.font.SysFont(self._font, self._textSize, bold=self._isBold)
@@ -103,9 +112,3 @@ class Button:
         pygame.draw.rect(screen, self._color, self._pyBox)
         if self._hasText: screen.blit(self._pyText, (self._tx, self._ty))
         if self._hasIcon: screen.blit(self._pyIcon, (self._ix, self._iy))
-
-    def is_in(self, pos):
-        if not self._is_active: return False
-        if not (self._bx < pos[0] <= self._bx + self._bw): return False
-        if not (self._by < pos[1] <= self._by + self._bh): return False
-        return True

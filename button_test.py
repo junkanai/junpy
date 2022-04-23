@@ -9,11 +9,11 @@ def main():
     b2 = button.Button()
 
     b2.set_position(100, 200)
-    b2.set_size(300, 400)
+    b2.set_size(500, 200)
     b2.set_color((200, 100, 0))
     b2.set_visible(False)
     b2.set_text("hello", (100, 0, 0), 60, bold=True)
-    b2.set_icon("example1.png")
+    b2.set_icon("fortest/example1.png")
     b2.set_iconSize(500, 500)
 
     working = True
@@ -29,12 +29,13 @@ def main():
             if event.type == pygame.QUIT: working = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if b1.is_in(event.pos):
+                # if b1.is_in(event.pos):
+                if event.pos in b1:
                     b1.set_active(False)
                     b2.set_active()
                     b2.set_visible()
                     print("b1 pressed")
-                if b2.is_in(event.pos):
+                if event.pos in b2:
                     b2.set_active(False)
                     b1.set_active()
                     print("b2 pressed")
