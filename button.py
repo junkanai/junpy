@@ -1,4 +1,5 @@
 import pygame
+import cprint
 
 class Button:
     def __init__(self, bx=0, by=0, bw=200, bh=50, color=(255, 255, 255)):
@@ -97,9 +98,40 @@ class Button:
 
     # about general
     def _update(self):
-        # position ajustment
+        self._preparation()
+        text_offset = [0, 0]
+        icon_offset = [0, 0]
 
-        # prepare for drawing
+        if self._hasIcon:
+            icon_offset = self._pyIcon.get_rect(center=(self._bw//2, self._bh//2))
+        if self._hasText and self._hasIcon:
+            text_offset = self._pyText.get_rect(center=((self._bw-self._iw-self._margin)//2, self._bh//2))
+        if self._hasText and not self._hasIcon:
+            text_offset = self._pyText.get_rect(center=(self._bw//2, self._bh//2))
+
+        self._iy = icon_offset[1] + self._by
+        self._ty = text_offset[1] + self._by
+
+        if self._hasIcon and not self._hasText:
+            self._ix = icon_offset[0] + self._bx
+
+        if self._layout == 0:  # center
+            if self._hasText and self._hasIcon:
+                self._ix = self._bx + self._margin
+                self._tx = text_offset[0] + self._bx + self._iw
+            else:
+                self._tx = text_offset[0] + self._bx
+
+        if self._layout == 1:  # left
+            if self._hasText and self._hasIcon:
+                self._ix = self._bx + self._margin
+                self._tx = self._iw + self._bx + self._margin + self._margin
+            else:
+                self._tx = self._bx + self._margin
+
+        self._preparation()
+
+    def _preparation(self):
         self._pyBox = pygame.Rect(self._bx, self._by, self._bw, self._bh)
         if self._hasText:
             pyfont = pygame.font.SysFont(self._font, self._textSize, bold=self._isBold)
