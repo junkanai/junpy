@@ -6,6 +6,7 @@ class Button:
         # about button
         self._is_active = True
         self._is_visible = True
+        self._is_bg_visible = True
         self._bx, self._by, self._bw, self._bh = bx, by, bw, bh
         self._color = color
         self._margin = 10
@@ -44,6 +45,9 @@ class Button:
 
     def set_visible(self, b=True):
         self._is_visible = b
+
+    def set_bg_visible(self, b=True):
+        self._is_bg_visible = b
 
     def set_margin(self, margin):
         self._margin = margin
@@ -141,6 +145,6 @@ class Button:
 
     def draw(self, screen):
         if not self._is_visible: return
-        pygame.draw.rect(screen, self._color, self._pyBox)
+        if self._is_bg_visible: pygame.draw.rect(screen, self._color, self._pyBox)
         if self._hasText: screen.blit(self._pyText, (self._tx, self._ty))
         if self._hasIcon: screen.blit(self._pyIcon, (self._ix, self._iy))
